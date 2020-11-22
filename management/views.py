@@ -3,4 +3,5 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    return HttpResponse('Hii There, I am still under Construction... See you soon!!')
+    # return HttpResponse('Hii There, I am still under Construction... See you soon!!')
+    return render(request, 'management/index.html')
