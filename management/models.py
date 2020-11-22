@@ -32,10 +32,10 @@ class Book(models.Model):
     language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
     total_copies = models.IntegerField()
     available_copies = models.IntegerField()
-    pic = models.ImageField(blank=True, null=True, upload_to='book_image')
+    pic = models.ImageField(blank=True, null=True, upload_to='media/')
 
     def __str__(self):
-        return self.title
+        return f'{self.id} {self.title}'
 
 
 class Student(models.Model):

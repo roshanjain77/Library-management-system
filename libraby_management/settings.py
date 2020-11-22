@@ -130,4 +130,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = ''
+STATIC_ROOT = '/home/roshan/Desktop/libraby_management/static'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = '/home/roshan/Desktop/libraby_management/media'
