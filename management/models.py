@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -26,10 +27,10 @@ class Author(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
-    author = models.ForeignKey('Author', on_delete=models.CASCADE, related_name="books")
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name="books")
     summary = models.TextField(max_length=1000)
     genre = models.ManyToManyField(Genre, related_name="books")
-    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
+    language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True)
     total_copies = models.IntegerField()
     available_copies = models.IntegerField()
     pic = models.ImageField(blank=True, null=True, upload_to='media/')
@@ -40,24 +41,26 @@ class Book(models.Model):
 
 class Student(models.Model):
     roll_no = models.CharField(max_length=8, unique=True)
-    name = models.CharField(max_length=32)
-    branch = models.CharField(max_length=3)
+    name = models.OneToOneField(User, on_delete=models.CASCADE, related_name="data")
+    pic = models.ImageField(blank=True, null=True, upload_to='media/')
+    branch = models.CharField(max_length=32)
     contact_no = models.CharField(max_length=10)
     total_books_due = models.IntegerField(default=0)
-    email = models.EmailField(unique=True)
+    tot_fine = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.roll_no} {self.name}"
 
 
 class Borrower(models.Model):
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    book = models.ForeignKey('Book', on_delete=models.CASCADE)
-    issue_date = models.DateTimeField(null=True, blank=True)
-    return_date = models.DateTimeField(null=True, blank=True)
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name="borrowed")
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    issue_date = models.DateField(null=True, blank=True)
+    return_date = models.DateField(null=True, blank=True)
+    fine = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.student.name + " borrowed " + self.book.title
+        return self.student.first_name + " borrowed " + self.book.title
 
 # class Reviews(models.Model):
 #     review=models.CharField(max_length=100,default="none")

@@ -1,0 +1,61 @@
+{% extends "management/layout.html" %}
+{% load static %}
+{% block body %}
+
+<main role="main" class="container">
+    <div class="row ml-8 mt-5">
+      <div class="col">
+        <ul class="list-group list-group-flush">
+        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+          <li class="list-group-item"><h1>{{user.first_name}} {{user.last_name}}</h1></li>
+          <li class="list-group-item">Email - {{user.email}}</li>
+          <li class="list-group-item">Roll No. - {{data.roll_no}}</li>
+          <li class="list-group-item">Branch - {{data.branch}}</li>
+          <li class="list-group-item">Contact no. - {{data.contact_no}}</li>
+        </div>
+        </ul>
+      </div>
+      
+      <div class="col col-lg-5">
+        <ul class="list-group list-group-flush">
+        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+          <li class="list-group-item"><h2 style="text-align: center;">{{data.total_books_due}}</h2></li>
+          <li class="list-group-item"><h4 style="text-align: center;">Books Due</h6></li>
+        </div>
+        </ul>
+        <ul class="list-group list-group-flush">
+            <div class="shadow-lg p-3 mb-5 bg-white rounded">
+              <li class="list-group-item"><h2 style="text-align: center;">{{data.tot_fine}}</h2></li>
+              <li class="list-group-item"><h4 style="text-align: center;">Total Fine</h6></li>
+            </div>
+        </ul>
+      </div>
+    </div>
+</main>
+
+<main class="container mt-5">
+    <h5><b>Books Issued</b></h5>
+    <table class="table table-hover w-100">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col-6">Book</th>
+            <th scope="col-2">Issued Date</th>
+            <th scope="col-2 ">Expected Return Date</th>
+            <th scope="col-2 ">Fine</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for borrow in borrows %}
+            <tr>
+                <td><a href="{% url 'book' borrow.book.id %}" style="color: black;">{{borrow.book}}</a></td>
+                <td>{{borrow.issue_date}}</td>
+                <td>{{borrow.return_date}}</td>
+                <td>{{borrow.fine}}</td>
+            </tr>
+          {% endfor %}
+    
+        </tbody>
+      </table>
+      </main>
+
+{% endblock %}
