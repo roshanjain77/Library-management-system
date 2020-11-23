@@ -22,7 +22,7 @@
     </head>
     <body>
         <header>
-            <a class="logo" href="#"><img src="{% static 'management/logo10.png' %}" alt="logo"></a>
+            <a class="logo" href="{% url 'index' %}"><img src="{% static 'management/logo10.png' %}" alt="logo"></a>
             <nav>
                 <ul class="nav__links">
                     <li><a href="{% url 'books' %}">Books</a></li>
@@ -31,7 +31,7 @@
                     <li><a href="/admin">Admin</a></li>
                 </ul>
             </nav>
-            <a class="cta" href="#">Log out</a>
+            <a class="cta" href="{% url 'logout' %}">Log out</a>
             <p class="menu cta">Menu</p>
         </header>
         <div id="mobile__menu" class="overlay">
@@ -41,7 +41,7 @@
                   <a href="{% url 'authors' %}">Authors</a>
                   <a href="{% url 'profile' %}">Profile</a>
                   <a href="/admin">Admin</a>
-                  <a href="#">Log out</a>
+                  <a href="{% url 'logout' %}">Log out</a>
             </div>
         </div>
         <script type="text/javascript" src="{% static 'management/mobile.js' %}"></script>

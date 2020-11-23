@@ -1,5 +1,5 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -11,6 +11,8 @@ from .models import *
 
 Fineperday = 5
 
+# used to update user data before they try to access 
+# the profile page
 def update_data(user):
     data = user.data
     borrows = user.borrowed.all()
@@ -29,6 +31,16 @@ def update_data(user):
     data.save()
     return
             
+
+def update_book_data(book_id):
+    
+    book = Book.objects.get(pk=book_id)
+    in_use = len(Borrower.objects.filter(book=book))
+    book.available_copies = book.total_copies - in_use
+    book.save()
+    return
+
+
 def login_view(request):
     if request.method=="POST":
         username = request.POST["username"]
@@ -39,7 +51,13 @@ def login_view(request):
             return HttpResponseRedirect(reverse("index"))
         else:
             return render(request,"management/login.html")
-    return render(request,"management/login.html")
+    else:
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('index'))
+        
+        else:
+            return render(request,"management/login.html")
+
 
 def logout_view(request):
     logout(request)
@@ -50,17 +68,21 @@ def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
         
-    #book = Book.objects.order_by('-id').first()
-    book = Book.objects.first()
+    
+    book = Book.objects.all().last()
+    update_book_data(book.id)
+    book = Book.objects.all().last()
     context = {"book": book, "genre": book.genre.all()}
     return render(request, 'management/book.html', context=context)
 
 
 def display_book(request, book_id):
 
+    update_book_data(book_id)
     book = Book.objects.get(pk=book_id)
     context = {"book": book, "genre": book.genre.all()}
     return render(request, 'management/book.html', context=context)
+
 
 def books (request):
     book_list = Book.objects.all()
@@ -89,8 +111,10 @@ def profile(request):
 
     return render(request, 'management/profile.html', context=context)
 
+
 def developers(request):
-    return render(request, "users/developers.html", {"page_name":"Developers"})
+    return render(request, "management/developers.html", {"page_name":"Developers"})
+
 
 def mentors(request):
-    return render(request, "users/mentors.html", {"page_name":"Mentors"})
+    return render(request, "management/mentors.html", {"page_name":"Mentors"})

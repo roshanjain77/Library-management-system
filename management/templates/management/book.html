@@ -2,7 +2,19 @@
 {% extends "management/layout.html" %}
 {% load static %}
 {% block body %}
+
 <main role="main" class="container" style="margin-top: 50px;">
+    <div class="row">
+        {% if book.available_copies %}
+            <div class="alert alert-success" role="alert" style="width: 100%;text-align: center;">
+                {{book.available_copies}} copies Available
+            </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert" style="width: 100%;text-align: center;">
+                Not Available yet...
+            </div>
+        {% endif %}
+    </div>
     <div class="row">
       <div class="col-md-7 blog-main">
   
