@@ -25,8 +25,8 @@
             <a class="logo" href="#"><img src="{% static 'management/logo10.png' %}" alt="logo"></a>
             <nav>
                 <ul class="nav__links">
-                    <li><a href="#">Books</a></li>
-                    <li><a href="#">Authors</a></li>
+                    <li><a href="{% url 'books' %}">Books</a></li>
+                    <li><a href="{% url 'authors' %}">Authors</a></li>
                     <li><a href="#">Profile</a></li>
                     <li><a href="/admin">Admin</a></li>
                 </ul>
@@ -37,8 +37,8 @@
         <div id="mobile__menu" class="overlay">
             <a class="close">&times;</a>
             <div class="overlay__content">
-                  <a href="#">Books</a>
-                  <a href="#">Authors</a>
+                  <a href="{% url 'books' %}">Books</a>
+                  <a href="{% url 'authors' %}">Authors</a>
                   <a href="#">Profile</a>
                   <a href="/admin">Admin</a>
                   <a href="#">Log out</a>

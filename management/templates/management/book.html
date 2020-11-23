@@ -8,7 +8,7 @@
   
         <div class="blog-post">
           <h2 class="blog-post-title">{{book.title}}</h2>
-          <p class="blog-post-meta">by <a href="#">{{book.author}}</a></p>  
+          <p class="blog-post-meta">by <a href="{% url 'book_author' book.author.id %}">{{book.author}}</a></p>  
           <div class="col-md-6"></div>       
           <div class="col-md-6">
             <ul class="col-md-3">

@@ -1,0 +1,27 @@
+{% extends "management/layout.html" %}
+{% load static %}
+{% block body %}
+<div style="margin-left: 100px; margin-right: 100px;">
+<div style="margin: 20px; background-color: antiquewhite;">
+   <h1 style="text-align: center;">Recent books</h1>
+</div>
+ <main class="cards">
+   {% for book in book_list %}
+    <div class="card">
+      <img src="/media/{{book.pic}}" alt="Sample photo">
+      <div class="text">
+        <h3 style="text-align: center; font-family: serif;">{{ book.title }}</h3>
+        <h6>Author : {{book.author}}</p>
+         <a href="{% url 'book' book.id %}" class="btn btn-primary">Go to the book</a>
+      </div>
+    </div>
+    {% endfor %}
+    
+    
+  </main>    
+  
+
+ 
+</div>
+
+{% endblock %}
