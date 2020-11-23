@@ -32,6 +32,15 @@ def update_data(user):
     return
             
 
+def update_book_data(book_id):
+    
+    book = Book.objects.get(pk=book_id)
+    in_use = len(Borrower.objects.filter(book=book))
+    book.available_copies = book.total_copies - in_use
+    book.save()
+    return
+
+
 def login_view(request):
     if request.method=="POST":
         username = request.POST["username"]
@@ -59,13 +68,17 @@ def index(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
         
-    book = Book.objects.order_by('-id').first()
+    
+    book = Book.objects.all().last()
+    update_book_data(book.id)
+    book = Book.objects.all().last()
     context = {"book": book, "genre": book.genre.all()}
     return render(request, 'management/book.html', context=context)
 
 
 def display_book(request, book_id):
 
+    update_book_data(book_id)
     book = Book.objects.get(pk=book_id)
     context = {"book": book, "genre": book.genre.all()}
     return render(request, 'management/book.html', context=context)
