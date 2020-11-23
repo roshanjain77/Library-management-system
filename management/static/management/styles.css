@@ -157,23 +157,23 @@ footer {
 }
 
 
-.cards .card {
+ .card {
   flex: 0 0 17%;
   margin: 10px;
   
   width: 500px;
   height : 300px;
-  overflow-y: scroll;
   transition: 0.3s;
   border-radius: 10px;
   border: 5px solid rgb(109, 104, 104);
   box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
 } 
-.cards .card:hover {
+ .card:hover {
   transform: scale(1.04);
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   
 }
+
 
 .cards .card img {
   max-width: 100%;
@@ -188,3 +188,13 @@ footer {
   padding: 10px;
   width: 100%;
   }
+
+.list-group {
+  border-radius: 15px;
+   text-align: center;
+   font-size: 25px;
+}
+
+.list-group-item{
+  border-radius: 7px;
+}
