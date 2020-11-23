@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- <meta name="description" content=""> -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -23,6 +23,8 @@
     <body>
         <header>
             <a class="logo" href="#"><img src="{% static 'management/logo10.png' %}" alt="logo"></a>
+            
+                
             <nav>
                 <ul class="nav__links">
                     <li><a href="{% url 'books' %}">Books</a></li>
@@ -33,6 +35,43 @@
             </nav>
             <a class="cta" href="#">Log out</a>
             <p class="menu cta">Menu</p>
+            <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn">Search </button> 
+                <div id="myDropdown" class="dropdown-content">
+                  <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                      {%for book in book_list%}
+                           <a href="{% url 'book' book.id %}">{{book.title}}</a>
+                      {%endfor%}
+                      {% for author in author_list %}
+      
+                          <a href="{% url 'book_author' author.id %}"  > {{author}}</a>
+                      {% endfor %}
+                </div>
+              </div>
+            
+              <script>
+              /* When the user clicks on the button,
+              toggle between hiding and showing the dropdown content */
+              function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+              }
+              
+              function filterFunction() {
+                var input, filter, ul, li, a, i;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                div = document.getElementById("myDropdown");
+                a = div.getElementsByTagName("a");
+                for (i = 0; i < a.length; i++) {
+                  txtValue = a[i].textContent || a[i].innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                  } else {
+                    a[i].style.display = "none";
+                  }
+                }
+              }
+              </script>
         </header>
         <div id="mobile__menu" class="overlay">
             <a class="close">&times;</a>
