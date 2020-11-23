@@ -1,9 +1,33 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render
+import datetime
 
 from .models import *
 
 # Create your views here.
+
+Fineperday = 5
+
+def update_data(user):
+    data = user.data
+    borrows = user.borrowed.all()
+
+    tot = 0
+    cur_date = datetime.date.today()
+    for borrow in borrows:
+        if borrow.return_date < cur_date:
+            fine = (cur_date - borrow.return_date).days * Fineperday
+            borrow.fine = fine
+            borrow.save()
+            tot += fine
+    
+    data.tot_fine = tot
+    data.total_books_due = len(borrows)
+    data.save()
+    return
+            
+
+
 def index(request):
 
     #book = Book.objects.order_by('-id').first()
@@ -33,3 +57,14 @@ def book_author (request, author_name):
     cur_author = Author.objects.get(pk=author_name)
     return render(request,"management/book_author.html", context={"book_list":book_list, "author":cur_author})
 
+
+def profile(request):
+
+    user = User.objects.get(username=request.user.username)
+
+    update_data(user)
+
+    data = user.data
+    context = {"user": user, "data": data, "borrows": user.borrowed.all()}
+
+    return render(request, 'management/profile.html', context=context)
