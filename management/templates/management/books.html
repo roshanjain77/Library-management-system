@@ -5,18 +5,18 @@
 <div style="margin: 20px; background-color: antiquewhite;">
    <h1 style="text-align: center;">Recent books</h1>
 </div>
- <!-- <main class="cards"> -->
-<div style="display: flex; align-items: stretch; flex-wrap: wrap;">
+  <main class="cards"> 
+<!-- <div style="display: flex; align-items: stretch; flex-wrap: wrap;"> -->
    {% for book in book_list %}
-    <!-- <div class="card">
-      <img src="/media/{{book.pic}}" alt="Sample photo">
+     <div class="card">
       <div class="text">
         <h3 style="text-align: center; font-family: serif;">{{ book.title }}</h3>
         <h6>Author : {{book.author}}</p>
          <a href="{% url 'book' book.id %}" class="btn btn-primary">Go to the book</a>
       </div>
-    </div> -->
-    <div class="card" style="max-width: 540px; flex:0 0 45%">
+      <img src="/media/{{book.pic}}" alt="Sample photo">
+    </div> 
+   <!-- <div class="card" style="max-width: 540px; flex:0 0 45%">
         <div class="row no-gutters">
           <div class="col-md-4">
             <img src="/media/{{book.pic}}" class="card-img" alt="...">
@@ -29,11 +29,11 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     {% endfor %}
     </div>
     
-  <!-- </main>     -->
+   </main>     
   
 
  
