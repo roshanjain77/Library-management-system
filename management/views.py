@@ -113,8 +113,8 @@ def profile(request):
 
 
 def developers(request):
-    return render(request, "users/developers.html", {"page_name":"Developers"})
+    return render(request, "management/developers.html", {"page_name":"Developers"})
 
 
 def mentors(request):
-    return render(request, "users/mentors.html", {"page_name":"Mentors"})
+    return render(request, "management/mentors.html", {"page_name":"Mentors"})
