@@ -1,5 +1,8 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render
+from django.contrib.auth import authenticate,login,logout
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 import datetime
 
 from .models import *
@@ -26,10 +29,27 @@ def update_data(user):
     data.save()
     return
             
+def login_view(request):
+    if request.method=="POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user != None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request,"management/login.html")
+    return render(request,"management/login.html")
+
+def logout_view(request):
+    logout(request)
+    return render(request,"management/login.html")
 
 
 def index(request):
-
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+        
     #book = Book.objects.order_by('-id').first()
     book = Book.objects.first()
     context = {"book": book, "genre": book.genre.all()}
@@ -68,3 +88,9 @@ def profile(request):
     context = {"user": user, "data": data, "borrows": user.borrowed.all()}
 
     return render(request, 'management/profile.html', context=context)
+
+def developers(request):
+    return render(request, "users/developers.html", {"page_name":"Developers"})
+
+def mentors(request):
+    return render(request, "users/mentors.html", {"page_name":"Mentors"})

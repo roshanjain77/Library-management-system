@@ -27,7 +27,7 @@
                 <ul class="nav__links">
                     <li><a href="{% url 'books' %}">Books</a></li>
                     <li><a href="{% url 'authors' %}">Authors</a></li>
-                    <li><a href="#">Profile</a></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
                     <li><a href="/admin">Admin</a></li>
                 </ul>
             </nav>
@@ -39,7 +39,7 @@
             <div class="overlay__content">
                   <a href="{% url 'books' %}">Books</a>
                   <a href="{% url 'authors' %}">Authors</a>
-                  <a href="#">Profile</a>
+                  <a href="{% url 'profile' %}">Profile</a>
                   <a href="/admin">Admin</a>
                   <a href="#">Log out</a>
             </div>
@@ -52,9 +52,8 @@
         <footer>
             <nav>
                 <ul class="nav__links1">
-                    <li><a href="#">Developers</a></li>
-                    <li><a href="#">Mentors</a></li>
-                    <li><a href="#">Feedback</a></li>
+                    <li><a href="{% url 'developers' %}">Developers</a></li>
+                    <li><a href="{% url 'mentors' %}">Mentors</a></li>
                 </ul>
             </nav>
         </footer>
