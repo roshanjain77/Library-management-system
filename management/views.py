@@ -75,7 +75,13 @@ def index(request):
 
 
 def display_book(request, book_id):
-
+    if request.method=="POST":
+        if request.user.is_authenticated:
+            book = Book.objects.get(pk=book_id)
+            user = User.objects.get(username=request.user)
+            book_request = request_book.create(student=user, book=book)
+            book_request.save()
+            
     update_book_data(book_id)
     book = Book.objects.get(pk=book_id)
     context = {"book": book, "genre": book.genre.all()}
