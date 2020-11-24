@@ -65,14 +65,12 @@ def logout_view(request):
 
 
 def index(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
-        
     
     book = Book.objects.all().last()
     update_book_data(book.id)
     book = Book.objects.all().last()
-    context = {"book": book, "genre": book.genre.all()}
+    books = Book.objects.all()
+    context = {"book": book, "genre": book.genre.all(), "book_list": books}
     return render(request, 'management/book.html', context=context)
 
 
@@ -101,7 +99,10 @@ def book_author (request, author_name):
 
 
 def profile(request):
-
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+        
+    
     user = User.objects.get(username=request.user.username)
 
     update_data(user)
