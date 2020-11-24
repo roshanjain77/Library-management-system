@@ -39,9 +39,11 @@
         <img src="/media/{{book.pic}}" class="card-img" alt="...">
       </div>
     </div>
-    <form action="{% url 'book' {{book.id}} %}" method="POST">
+    <div style="margin-top: 20px;">
+    <form action="{% url 'book' book.id %}" method="POST">
     {% csrf_token %}
     <button type="submit" class="btn btn-primary btn-lg">Request this book</button>
     </form>
+  </div>
 </main>
 {% endblock %}
