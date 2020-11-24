@@ -61,6 +61,12 @@ class Borrower(models.Model):
 
     def __str__(self):
         return self.student.first_name + " borrowed " + self.book.title
+    
+class request_book(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name="requested")
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    def __str__(self):
+        return f"{self.student} has requested {self.book}"
 
 # class Reviews(models.Model):
 #     review=models.CharField(max_length=100,default="none")
